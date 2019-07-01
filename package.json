@@ -3,9 +3,11 @@
   "scripts": {
     "start": "lib/index.js",
     "build": "tsc",
-    "build:watch": "tsc -w"
+    "build:watch": "tsc -w",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
+    "@types/jest": "^24.0.15",
     "jest": "^24.8.0",
     "ts-jest": "^24.0.2",
     "typescript": "^3.5.2"
