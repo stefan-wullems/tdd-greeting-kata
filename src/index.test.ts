@@ -1,22 +1,22 @@
 import { greet } from '.'
 
-test('greet(name = Stefan) should return "hello, Stefan"', () => {
+test('greet', () => {
   const name = 'Stefan'
 
   const greeting = greet(name)
 
-  expect(greeting).toBe('hello, Stefan')
+  expect(greeting).toBe('hello, Stefan.')
 })
 
-test('greet(name = null) should return "hello, my friend', () => {
+test('Handle nulls by introducing a stand-in.', () => {
   const name = null
 
   const greeting = greet(name)
 
-  expect(greeting).toBe('hello, my friend')
+  expect(greeting).toBe('hello, my friend.')
 })
 
-test('greet(name = STEFAN) should return "HELLO STEFAN"', () => {
+test('Handle shouting.', () => {
   const name = 'STEFAN'
 
   const greeting = greet(name)
@@ -24,26 +24,42 @@ test('greet(name = STEFAN) should return "HELLO STEFAN"', () => {
   expect(greeting).toBe('HELLO STEFAN!')
 })
 
-test('greet(name = [stefan, joyce] should return "hello, stefan and joyce"', () => {
-  const name = ['stefan', 'joyce']
+test('Handle two names of input.', () => {
+  const name = ['Stefan', 'Joyce']
 
   const greeting = greet(name)
 
-  expect(greeting).toBe('hello, stefan and joyce')
+  expect(greeting).toBe('hello, Stefan and Joyce.')
 })
 
-test('greet(name = [stefan, joyce, kathe] should return "hello, stefan, joyce and kathe"', () => {
-  const name = ['stefan', 'joyce', 'kathe']
+test('Handle an arbitrary number of names as input.', () => {
+  const name = ['Stefan', 'Joyce', 'Kathe']
 
   const greeting = greet(name)
 
-  expect(greeting).toBe('hello, stefan, joyce and kathe')
+  expect(greeting).toBe('hello, Stefan, Joyce and Kathe.')
 })
 
-test('greet(name = [stefan, JOYCE, kathe] should return "hello, stefan and kathe. AND HELLO JOYCE!"', () => {
-  const name = ['stefan', 'JOYCE', 'kathe']
+test('Allow mixing of normal and shouted names by separating the response into two greetings.', () => {
+  const name = ['Stefan', 'JOYCE', 'Kathe']
 
   const greeting = greet(name)
 
-  expect(greeting).toBe('hello, stefan and kathe. AND HELLO JOYCE!')
+  expect(greeting).toBe('hello, Stefan and Kathe. AND HELLO JOYCE!')
+})
+
+test('If any entries in name are a string containing a comma, split it as its own input.', () => {
+  const name = ['Stefan', 'Joyce, Kathe']
+
+  const greeting = greet(name)
+
+  expect(greeting).toBe('hello, Stefan, Joyce and Kathe.')
+})
+
+test('Allow the input to escape intentional commas by wrapping in double quotes', () => {
+  const name = ['Stefan', '"Joyce, Kathe"']
+
+  const greeting = greet(name)
+
+  expect(greeting).toBe('hello, Stefan and Joyce, Kathe.')
 })
